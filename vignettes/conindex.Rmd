@@ -1,0 +1,109 @@
+---
+title: "Estimating concentration indices with conindex"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Estimating concentration indices with conindex}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+library(conindex)
+```
+
+## Overview
+
+`conindex` computes rank-dependent inequality indices — the family of
+concentration indices used in health economics to measure socioeconomic
+inequality in an outcome. It is a faithful R translation of the Stata command of
+the same name (O'Donnell et al. 2016), reproducing its index values and standard
+errors.
+
+There is **no default index**: options select which index is computed.
+
+## A worked example on synthetic data
+
+The real examples in O'Donnell et al. (2016) use Demographic and Health Survey
+data that cannot be redistributed. Here we use a small synthetic dataset with an
+outcome `h` and a socioeconomic ranking variable `ses`.
+
+```{r}
+set.seed(1)
+n <- 800
+df <- data.frame(
+  ses = rnorm(n),
+  wt  = runif(n, 0.5, 1.5)
+)
+df$h    <- pmax(0.05, 2 + 0.6 * df$ses + rnorm(n))   # ratio-scale outcome
+df$hbin <- as.numeric(df$h > median(df$h))            # bounded [0, 1] outcome
+```
+
+### Standard concentration index
+
+```{r}
+conindex(df, "h", rankvar = "ses", weights = "wt", truezero = TRUE)
+```
+
+### Gini coefficient
+
+Ranking by the outcome itself yields a Gini coefficient:
+
+```{r}
+conindex(df, "h", weights = "wt", truezero = TRUE)
+```
+
+### Generalized concentration index
+
+```{r}
+conindex(df, "h", rankvar = "ses", weights = "wt", truezero = TRUE,
+         generalized = TRUE)
+```
+
+### Bounded variables: Wagstaff and Erreygers
+
+For a bounded (e.g. binary) outcome, specify `bounded` and `limits`:
+
+```{r}
+conindex(df, "hbin", rankvar = "ses", bounded = TRUE, limits = c(0, 1),
+         erreygers = TRUE)
+conindex(df, "hbin", rankvar = "ses", bounded = TRUE, limits = c(0, 1),
+         wagstaff = TRUE)
+```
+
+### Distributionally sensitive indices
+
+The extended index (`v`) and symmetric index (`beta`) allow alternative attitudes
+to inequality. With `v = 2` (or `beta = 2`) they coincide with the standard CI.
+Standard errors are not produced for these indices.
+
+```{r}
+conindex(df, "h", rankvar = "ses", truezero = TRUE, v = 1.5)
+conindex(df, "h", rankvar = "ses", truezero = TRUE, beta = 1.5)
+```
+
+### Robust and clustered standard errors
+
+```{r}
+df$psu <- sample(1:40, n, replace = TRUE)
+conindex(df, "h", rankvar = "ses", truezero = TRUE, cluster = "psu")
+```
+
+### Comparing groups
+
+`compare` computes the index within each group and tests homogeneity with a
+small-sample F-test and (for two groups) a large-sample z-test.
+
+```{r}
+df$urban <- rbinom(n, 1, 0.4)
+conindex(df, "h", rankvar = "ses", truezero = TRUE, compare = "urban")
+```
+
+## Interactive use
+
+`run_conindex_app()` opens a Shiny GUI for point-and-click estimation.
+
+## References
+
+O'Donnell, O., O'Neill, S., Van Ourti, T. & Walsh, B. (2016). conindex:
+Estimation of concentration indices. *The Stata Journal*.

@@ -1,0 +1,30 @@
+# R
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+*.Rproj
+
+# build artefacts
+/*.tar.gz
+/*.Rcheck/
+/docs/
+inst/doc/
+/doc/
+/Meta/
+
+# renv library (keep lockfile, ignore the local library)
+renv/library/
+renv/local/
+renv/cache/
+renv/staging/
+renv/python/
+renv/sandbox/
+
+# non-redistributable data (DHS requires registration)
+/Data/
+*.dta
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,10 @@
+^LICENSE\.md$
+^\.github$
+^CONTRIBUTING\.md$
+^\.gitignore$
+^renv$
+^renv\.lock$
+^\.Rproj\.user$
+^Example R script\.R$
+\.Rhistory$
+^tests/stata$

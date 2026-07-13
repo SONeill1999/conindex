@@ -1,0 +1,42 @@
+Package: conindex
+Type: Package
+Title: Rank-Dependent Inequality (Concentration) Indices
+Version: 1.7.0
+Authors@R: c(
+    person("Owen", "O'Donnell", role = "aut"),
+    person("Stephen", "O'Neill", email = "stephen.oneill@lshtm.ac.uk",
+           role = c("aut", "cre")),
+    person("Tom", "Van Ourti", role = "aut"),
+    person("Brendan", "Walsh", role = "aut"))
+Description: Computes a range of rank-dependent inequality indices, including the
+    Gini coefficient, the concentration index, the generalized (Gini)
+    concentration index, the modified concentration index, the Wagstaff and
+    Erreygers normalised concentration indices for bounded variables, and the
+    distributionally sensitive extended and symmetric concentration indices (and
+    their generalized versions). This is an R translation of the Stata command of
+    the same name described in O'Donnell, O'Neill, Van Ourti and Walsh (2016)
+    "conindex: Estimation of concentration indices", The Stata Journal. Indices are
+    estimated using the 'convenient covariance' regression approach, with robust,
+    clustered and (experimentally) survey-linearised standard errors.
+License: GPL (>= 3)
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Depends:
+    R (>= 4.1.0)
+Imports:
+    stats,
+    sandwich
+Suggests:
+    survey,
+    haven,
+    testthat (>= 3.0.0),
+    knitr,
+    rmarkdown,
+    shiny,
+    RStata
+Config/testthat/edition: 3
+VignetteBuilder: knitr
+URL: https://github.com/SONeill1999/conindex
+BugReports: https://github.com/SONeill1999/conindex/issues
