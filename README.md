@@ -9,7 +9,7 @@
 measure socioeconomic inequality in health and economic outcomes. It is a faithful
 R translation of the Stata command [`conindex`](https://doi.org/10.1177/1536867X1601600112)
 (O'Donnell, O'Neill, Van Ourti & Walsh, 2016) — index values and standard errors
-reproduce the original to displayed precision.
+reproduce the original to displayed precision. The translation used https://github.com/stata-translations/Stata2R (Thompson, S., Tamuri, A.& Pérez-Suárez, D. (2026). Stata2R (Version 0.0.1) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.21340235)
 
 ## Installation
 
